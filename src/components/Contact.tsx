@@ -44,7 +44,7 @@ const Contact = () => {
               Twitter <MdArrowOutward />
             </a>
             <a
-              href="https://www.instagram.com/webdaksh1"
+              href="https://www.instagram.com/allboutdaksh"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
