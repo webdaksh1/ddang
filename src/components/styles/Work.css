@@ -13,7 +13,7 @@
   margin-bottom: 50px;
 }
 
-.work-section h2>span {
+.work-section h2 > span {
   color: var(--accentColor);
 }
 
@@ -36,7 +36,6 @@
 
 .carousel-track {
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
@@ -114,6 +113,90 @@
   align-items: center;
 }
 
+/* ──────────────────────────────────────────
+   ENTER ANIMATION KEYFRAMES
+   "next" direction  → elements arrive from right / bottom
+   "prev" direction  → elements arrive from left / top
+────────────────────────────────────────── */
+
+/* Number: drops in from above */
+@keyframes numEnterNext {
+  from { opacity: 0; transform: translateY(-40px) scale(0.8); }
+  to   { opacity: 0.3; transform: translateY(0)   scale(1);   }
+}
+@keyframes numEnterPrev {
+  from { opacity: 0; transform: translateY(40px) scale(0.8); }
+  to   { opacity: 0.3; transform: translateY(0)  scale(1);   }
+}
+
+/* Title: slides in from its direction */
+@keyframes titleEnterNext {
+  from { opacity: 0; transform: translateX(50px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+@keyframes titleEnterPrev {
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+/* Category: fades up */
+@keyframes categoryEnter {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Tools: fades up, slightly later */
+@keyframes toolsEnter {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Image: scales in from opposite side */
+@keyframes imageEnterNext {
+  from { opacity: 0; transform: translateX(60px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0)    scale(1);    }
+}
+@keyframes imageEnterPrev {
+  from { opacity: 0; transform: translateX(-60px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0)     scale(1);    }
+}
+
+/* ── Apply animations when slide is active ── */
+
+/* NEXT direction */
+.carousel-content-enter.carousel-content-enter-next .carousel-anim-number {
+  animation: numEnterNext 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+.carousel-content-enter.carousel-content-enter-next .carousel-anim-title {
+  animation: titleEnterNext 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+.carousel-content-enter.carousel-content-enter-next .carousel-anim-category {
+  animation: categoryEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+}
+.carousel-content-enter.carousel-content-enter-next .carousel-anim-tools {
+  animation: toolsEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.26s both;
+}
+.carousel-content-enter.carousel-content-enter-next .carousel-anim-image {
+  animation: imageEnterNext 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+/* PREV direction */
+.carousel-content-enter.carousel-content-enter-prev .carousel-anim-number {
+  animation: numEnterPrev 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+.carousel-content-enter.carousel-content-enter-prev .carousel-anim-title {
+  animation: titleEnterPrev 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+.carousel-content-enter.carousel-content-enter-prev .carousel-anim-category {
+  animation: categoryEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+}
+.carousel-content-enter.carousel-content-enter-prev .carousel-anim-tools {
+  animation: toolsEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.26s both;
+}
+.carousel-content-enter.carousel-content-enter-prev .carousel-anim-image {
+  animation: imageEnterPrev 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
 /* ── Navigation Arrows ── */
 .carousel-arrow {
   position: absolute;
@@ -180,7 +263,7 @@
   box-shadow: 0 0 8px rgba(94, 234, 212, 0.4);
 }
 
-/* ── Work Image (reused) ── */
+/* ── Work Image ── */
 .work-image {
   display: flex;
   width: 100%;
@@ -189,6 +272,7 @@
 
 .work-image-in {
   position: relative;
+  width: 100%;
 }
 
 .work-link {
@@ -225,107 +309,95 @@
   left: 0;
   background-color: #000;
   object-fit: cover;
-}
-
-.work-image img {
-  max-width: 100%;
-  max-height: 400px;
   border-radius: 8px;
 }
 
-/* ── Responsive ── */
-@media only screen and (max-width: 1600px) {
-  .carousel-arrow-left {
-    left: -60px;
-  }
+.work-image img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
 
-  .carousel-arrow-right {
-    right: -60px;
-  }
+/* ── Responsive ── */
+
+@media only screen and (max-width: 1600px) {
+  .carousel-arrow-left { left: -60px; }
+  .carousel-arrow-right { right: -60px; }
 }
 
 @media only screen and (max-width: 1400px) {
-  .work-section h2 {
-    font-size: 50px;
-  }
-
-  .carousel-details h4 {
-    font-size: 22px;
-  }
-
-  .carousel-number h3 {
-    font-size: 45px;
-  }
-
-  .carousel-content {
-    gap: 40px;
-  }
-
-  .carousel-arrow-left {
-    left: 10px;
-  }
-
-  .carousel-arrow-right {
-    right: 10px;
-  }
+  .work-section h2 { font-size: 50px; }
+  .carousel-details h4 { font-size: 22px; }
+  .carousel-number h3 { font-size: 45px; }
+  .carousel-content { gap: 40px; }
+  .carousel-arrow-left { left: 10px; }
+  .carousel-arrow-right { right: 10px; }
 }
 
 @media only screen and (max-width: 1025px) {
-  .carousel-content {
-    flex-direction: column;
-    gap: 30px;
-  }
+  .carousel-content { flex-direction: column; gap: 30px; }
+  .carousel-info { width: 100%; }
+  .carousel-image-wrapper { width: 100%; }
+  .carousel-arrow { width: 40px; height: 40px; font-size: 18px; }
+  .carousel-arrow-left { left: 10px; }
+  .carousel-arrow-right { right: 10px; }
+  .work-image img { max-height: 350px; }
 
-  .carousel-info {
-    width: 100%;
+  /* On stacked layout, image animates vertically instead */
+  @keyframes imageEnterNextMobile {
+    from { opacity: 0; transform: translateY(40px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
   }
-
-  .carousel-image-wrapper {
-    width: 100%;
+  @keyframes imageEnterPrevMobile {
+    from { opacity: 0; transform: translateY(-40px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)     scale(1);    }
   }
-
-  .carousel-arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
+  .carousel-content-enter.carousel-content-enter-next .carousel-anim-image {
+    animation: imageEnterNextMobile 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
   }
-
-  .carousel-arrow-left {
-    left: 10px;
-  }
-
-  .carousel-arrow-right {
-    right: 10px;
+  .carousel-content-enter.carousel-content-enter-prev .carousel-anim-image {
+    animation: imageEnterPrevMobile 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
   }
 }
 
 @media only screen and (max-width: 900px) {
-  .work-section {
-    padding: 50px 0;
-  }
+  .work-section { padding: 50px 0; }
+  .work-section h2 { font-size: 40px; margin-bottom: 30px; }
+  .carousel-number h3 { font-size: 35px; }
+  .carousel-details h4 { font-size: 20px; }
+  .carousel-content { gap: 20px; }
+  .carousel-slide { padding: 30px 0; }
+  .work-image img { max-height: 280px; }
+}
 
-  .work-section h2 {
-    font-size: 40px;
-    margin-bottom: 30px;
-  }
+@media only screen and (max-width: 600px) {
+  .work-section { padding: 40px 0; }
+  .work-section h2 { font-size: 32px; margin-bottom: 24px; }
+  .carousel-slide { padding: 24px 0; }
+  .carousel-content { gap: 16px; }
+  .carousel-info { gap: 16px; }
+  .carousel-number h3 { font-size: 28px; }
+  .carousel-details h4 { font-size: 18px; }
+  .carousel-category { font-size: 14px; }
+  .carousel-tools .tools-label { font-size: 12px; }
+  .carousel-tools p { font-size: 13px; }
+  .carousel-arrow { width: 36px; height: 36px; font-size: 16px; top: 30%; }
+  .carousel-arrow-left { left: 4px; }
+  .carousel-arrow-right { right: 4px; }
+  .work-image img { max-height: 220px; border-radius: 6px; }
+  .carousel-dots { margin-top: 20px; gap: 10px; }
+  .carousel-dot { width: 8px; height: 8px; }
+}
 
-  .carousel-number h3 {
-    font-size: 35px;
-  }
-
-  .carousel-details h4 {
-    font-size: 20px;
-  }
-
-  .carousel-content {
-    gap: 20px;
-  }
-
-  .carousel-slide {
-    padding: 30px 0;
-  }
-
-  .work-image img {
-    max-height: 250px;
-  }
+@media only screen and (max-width: 400px) {
+  .work-section h2 { font-size: 26px; }
+  .carousel-number h3 { font-size: 22px; }
+  .carousel-details h4 { font-size: 16px; }
+  .carousel-info { gap: 10px; }
+  .work-image img { max-height: 180px; }
+  .carousel-arrow { width: 30px; height: 30px; font-size: 14px; }
 }
